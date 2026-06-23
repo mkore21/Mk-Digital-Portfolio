@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mihir Kore — Portfolio</title>
+<style>
+:root{
+  --bg:#060608;--bg2:#0c0c10;--bg3:#12121a;
+  --border:rgba(255,255,255,0.06);
+  --white:#f0f0f5;--muted:#777;--dim:#444;
+  --accent:#7B5EA7;--accent2:#00C896;--gold:#C9A84C;
+  --red:#E63946;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Georgia',serif;overflow-x:hidden;}
+
+/* ── CURSOR GLOW ── */
+.cursor-glow{
+  position:fixed;width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(123,94,167,0.08) 0%,transparent 70%);
+  pointer-events:none;z-index:0;transform:translate(-50%,-50%);
+  transition:left .1s,top .1s;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;
+  background:rgba(6,6,8,0);
+  border-bottom:1px solid rgba(255,255,255,0);
+  transition:background .4s,border-color .4s;
+}
+nav.scrolled{
+  background:rgba(6,6,8,0.92);
+  backdrop-filter:blur(16px);
+  border-color:var(--border);
+}
+.nav-brand{
+  font-family:'Arial',sans-serif;font-size:13px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;color:var(--white);
+  padding:22px 0;text-decoration:none;
+}
+.nav-brand span{color:var(--accent2);}
+.nav-links{display:flex;gap:4px;}
+.nav-links a{
+  font-family:'Arial',sans-serif;font-size:11px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--muted);text-decoration:none;
+  padding:22px 14px;transition:color .2s;white-space:nowrap;
+}
+.nav-links a:hover{color:var(--white);}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;padding:0 80px;
+  position:relative;overflow:hidden;
+}
+.hero-grid-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(123,94,167,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(123,94,167,0.04) 1px,transparent 1px);
+  background-size:60px 60px;
+  animation:gridMove 20s linear infinite;
+}
+@keyframes gridMove{from{transform:translateY(0)}to{transform:translateY(60px)}}
+.hero-orb{
+  position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;
+}
+.hero-orb-1{
+  width:500px;height:500px;top:-100px;right:-100px;
+  background:radial-gradient(circle,rgba(123,94,167,0.15) 0%,transparent 70%);
+  animation:orbFloat 8s ease-in-out infinite;
+}
+.hero-orb-2{
+  width:300px;height:300px;bottom:-50px;left:10%;
+  background:radial-gradient(circle,rgba(0,200,150,0.1) 0%,transparent 70%);
+  animation:orbFloat 12s ease-in-out infinite reverse;
+}
+@keyframes orbFloat{
+  0%,100%{transform:translate(0,0) scale(1);}
+  50%{transform:translate(20px,-30px) scale(1.1);}
+}
+.hero-content{position:relative;z-index:1;}
+.hero-eyebrow{
+  font-family:'Arial',sans-serif;font-size:11px;letter-spacing:5px;
+  text-transform:uppercase;color:var(--accent2);margin-bottom:24px;
+  opacity:0;transform:translateY(20px);
+  animation:fadeUp .8s .2s forwards;
+}
+.hero-name{
+  font-size:clamp(52px,8vw,110px);font-weight:700;
+  letter-spacing:-3px;line-height:.95;color:var(--white);
+  margin-bottom:8px;
+  opacity:0;transform:translateY(30px);
+  animation:fadeUp .8s .4s forwards;
+}
+.hero-name .accent{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-role{
+  font-size:clamp(16px,2vw,22px);color:var(--muted);
+  margin-bottom:40px;line-height:1.5;
+  opacity:0;transform:translateY(20px);
+  animation:fadeUp .8s .6s forwards;
+}
+.hero-role span{color:var(--white);}
+.hero-tags{
+  display:flex;flex-wrap:wrap;gap:10px;margin-bottom:48px;
+  opacity:0;transform:translateY(20px);
+  animation:fadeUp .8s .8s forwards;
+}
+.hero-tag{
+  font-family:'Arial',sans-serif;font-size:11px;letter-spacing:1px;
+  padding:6px 14px;border:1px solid var(--border);border-radius:20px;
+  color:var(--dim);transition:border-color .3s,color .3s;
+}
+.hero-tag:hover{border-color:var(--accent2);color:var(--accent2);}
+.hero-tag.cert{border-color:rgba(0,200,150,0.3);color:var(--accent2);}
+.hero-actions{
+  display:flex;gap:14px;flex-wrap:wrap;
+  opacity:0;transform:translateY(20px);
+  animation:fadeUp .8s 1s forwards;
+}
+.btn{
+  font-family:'Arial',sans-serif;font-size:11px;letter-spacing:2px;
+  text-transform:uppercase;padding:14px 28px;border-radius:4px;
+  text-decoration:none;cursor:pointer;transition:all .3s;
+  position:relative;overflow:hidden;
+}
+.btn::before{
+  content:'';position:absolute;inset:0;
+  background:rgba(255,255,255,0.08);
+  transform:translateX(-100%);transition:transform .3s;
+}
+.btn:hover::before{transform:translateX(0);}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent),rgba(0,200,150,0.8));
+  color:#fff;border:none;
+}
+.btn-ghost{
+  border:1px solid var(--border);color:var(--muted);
+}
+.btn-ghost:hover{border-color:var(--white);color:var(--white);}
+
+/* Scroll indicator */
+.scroll-hint{
+  position:absolute;bottom:40px;left:80px;
+  font-family:'Arial',sans-serif;font-size:10px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--dim);
+  display:flex;align-items:center;gap:12px;
+  opacity:0;animation:fadeUp .8s 1.4s forwards;
+}
+.scroll-line{width:40px;height:1px;background:var(--dim);}
+
+/* ── STATS BAR ── */
+.stats-bar{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  background:var(--bg2);border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.stat-item{
+  padding:32px 24px;text-align:center;border-right:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.stat-item:last-child{border-right:none;}
+.stat-item::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transform:scaleX(0);transform-origin:left;transition:transform .6s;
+}
+.stat-item.visible::before{transform:scaleX(1);}
+.stat-num{
+  font-family:'Arial',sans-serif;font-size:42px;font-weight:700;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;line-height:1;display:block;
+}
+.stat-label{
+  font-family:'Arial',sans-serif;font-size:10px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--muted);margin-top:6px;display:block;
+}
+.stat-sub{font-family:'Arial',sans-serif;font-size:11px;color:var(--dim);margin-top:3px;display:block;}
+
+/* ── SECTION BASE ── */
+.section{max-width:1100px;margin:0 auto;padding:100px 48px;}
+.section-eyebrow{
+  font-family:'Arial',sans-serif;font-size:10px;letter-spacing:5px;
+  text-transform:uppercase;color:var(--accent2);margin-bottom:14px;
+}
+.section-title{
+  font-size:clamp(28px,4vw,52px);font-weight:700;
+  letter-spacing:-1px;line-height:1.05;color:var(--white);margin-bottom:16px;
+}
+.section-body{font-size:15px;color:var(--muted);max-width:600px;line-height:1.8;}
+
+/* ── FADE ANIMATIONS ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .7s,transform .7s;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:.1s;}
+.reveal-delay-2{transition-delay:.2s;}
+.reveal-delay-3{transition-delay:.3s;}
+.reveal-delay-4{transition-delay:.4s;}
+
+/* ── THE BRIEF ── */
+.brief-analytics{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);border-radius:6px;overflow:hidden;
+  margin-top:48px;
+}
+.analytics-cell{
+  background:var(--bg2);padding:28px 20px;text-align:center;
+  transition:background .3s;
+}
+.analytics-cell:hover{background:var(--bg3);}
+.analytics-num{
+  font-family:'Arial',sans-serif;font-size:36px;font-weight:700;
+  color:var(--accent2);line-height:1;display:block;
+}
+.analytics-label{
+  font-family:'Arial',sans-serif;font-size:9px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--muted);margin-top:6px;display:block;
+}
+.analytics-delta{font-family:'Arial',sans-serif;font-size:11px;color:var(--accent2);margin-top:3px;display:block;}
+
+/* Edition cards */
+.editions-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:20px;margin-top:48px;
+}
+.edition-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:6px;
+  overflow:hidden;cursor:default;
+  transition:transform .3s,border-color .3s,box-shadow .3s;
+}
+.edition-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(0,200,150,0.2);
+  box-shadow:0 20px 40px rgba(0,0,0,0.3);
+}
+.edition-card-top{
+  padding:22px 22px 14px;
+  border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
+}
+.edition-week{
+  font-family:'Arial',sans-serif;font-size:9px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--accent2);
+}
+.edition-imp{
+  font-family:'Arial',sans-serif;font-size:11px;
+  background:rgba(0,200,150,0.1);color:var(--accent2);
+  padding:3px 10px;border-radius:2px;white-space:nowrap;
+}
+.edition-imp.top{background:rgba(255,215,0,0.1);color:#FFD700;}
+.edition-title{
+  font-size:15px;font-weight:700;color:var(--white);
+  margin-top:8px;line-height:1.3;
+}
+.edition-hook{
+  font-size:13px;color:var(--muted);font-style:italic;
+  margin-top:5px;line-height:1.5;
+}
+.edition-card-body{padding:16px 22px 20px;}
+.edition-topic{font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* ── AGENCY ── */
+.agency-metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);border-radius:6px;overflow:hidden;
+  margin-top:40px;
+}
+.metric-box{background:var(--bg2);padding:24px;text-align:center;transition:background .3s;}
+.metric-box:hover{background:var(--bg3);}
+.metric-box-num{
+  font-family:'Arial',sans-serif;font-size:34px;font-weight:700;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;line-height:1;
+}
+.metric-box-label{
+  font-family:'Arial',sans-serif;font-size:10px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--dim);margin-top:5px;
+}
+
+.role-cards{display:flex;flex-direction:column;gap:24px;margin-top:48px;}
+.role-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:6px;
+  overflow:hidden;transition:border-color .3s;
+}
+.role-card:hover{border-color:rgba(123,94,167,0.3);}
+.role-card-header{
+  padding:24px 28px 16px;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:flex-start;
+  flex-wrap:wrap;gap:8px;
+}
+.role-title-main{font-size:17px;font-weight:700;color:var(--white);}
+.role-org-main{font-family:'Arial',sans-serif;font-size:12px;color:var(--accent2);margin-top:3px;}
+.role-dates-main{font-family:'Arial',sans-serif;font-size:11px;color:var(--dim);}
+.role-sub-main{font-family:'Arial',sans-serif;font-size:11px;color:var(--dim);font-style:italic;margin-top:2px;}
+.role-card-body{padding:20px 28px;}
+.role-bullets{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.role-bullets li{
+  font-size:14px;color:var(--muted);padding-left:20px;
+  position:relative;line-height:1.6;
+}
+.role-bullets li::before{
+  content:'▸';position:absolute;left:0;top:1px;
+  color:var(--accent2);font-size:11px;
+}
+.role-bullets li strong{color:var(--white);}
+
+/* ── REAL ESTATE ── */
+.re-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:20px;margin-top:48px;
+}
+.re-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:6px;
+  padding:28px;transition:all .3s;
+}
+.re-card:hover{
+  background:var(--bg3);
+  transform:translateY(-3px);
+  border-color:rgba(201,168,76,0.25);
+}
+.re-icon{font-size:28px;margin-bottom:14px;}
+.re-title{font-size:16px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.re-body{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* ── SKILLS ── */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;margin-top:48px;}
+.skill-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:6px;
+  padding:24px;transition:border-color .3s,transform .3s;
+}
+.skill-card:hover{border-color:rgba(123,94,167,0.3);transform:translateY(-2px);}
+.skill-card-label{
+  font-family:'Arial',sans-serif;font-size:9px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--accent);margin-bottom:14px;
+}
+.skill-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.skill-list li{font-size:13px;color:var(--muted);padding-left:14px;position:relative;}
+.skill-list li::before{content:'·';position:absolute;left:0;color:var(--accent2);}
+
+/* Cert strip */
+.cert-strip{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px;}
+.cert-badge{
+  display:flex;align-items:center;gap:10px;
+  background:var(--bg2);border:1px solid rgba(0,200,150,0.2);
+  border-radius:4px;padding:12px 16px;transition:border-color .3s;
+}
+.cert-badge:hover{border-color:var(--accent2);}
+.cert-check{color:var(--accent2);font-size:14px;}
+.cert-name{font-family:'Arial',sans-serif;font-size:12px;color:var(--white);}
+.cert-issuer{font-family:'Arial',sans-serif;font-size:10px;color:var(--dim);}
+
+/* ── TIMELINE ── */
+.timeline{margin-top:48px;position:relative;padding-left:32px;}
+.timeline::before{
+  content:'';position:absolute;left:0;top:8px;bottom:8px;
+  width:1px;
+  background:linear-gradient(to bottom,var(--accent),var(--accent2),transparent);
+}
+.tl-item{padding:0 0 36px 24px;position:relative;}
+.tl-dot{
+  position:absolute;left:-6px;top:5px;width:13px;height:13px;
+  border-radius:50%;background:var(--accent2);border:2px solid var(--bg);
+  box-shadow:0 0 10px rgba(0,200,150,0.5);
+}
+.tl-week{
+  font-family:'Arial',sans-serif;font-size:9px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--accent2);margin-bottom:5px;
+}
+.tl-title{font-size:16px;font-weight:700;color:var(--white);margin-bottom:5px;}
+.tl-body{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:8px;}
+.tl-tag{
+  display:inline-block;font-family:'Arial',sans-serif;font-size:11px;
+  color:var(--accent2);background:rgba(0,200,150,0.1);
+  padding:3px 10px;border-radius:2px;
+}
+
+/* ── CONTACT ── */
+.contact-block{
+  background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  padding:60px 48px;text-align:center;position:relative;overflow:hidden;
+  margin-top:100px;
+}
+.contact-block::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(123,94,167,0.06) 0%,transparent 70%);
+}
+.contact-block h2{
+  font-size:clamp(28px,4vw,52px);font-weight:700;letter-spacing:-1px;
+  color:var(--white);margin-bottom:14px;position:relative;
+}
+.contact-block p{font-size:15px;color:var(--muted);margin-bottom:40px;position:relative;}
+.contact-links{
+  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
+  position:relative;
+}
+.contact-link{
+  font-family:'Arial',sans-serif;font-size:11px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--muted);text-decoration:none;
+  padding:6px 0;border-bottom:1px solid var(--border);
+  transition:color .2s,border-color .2s;
+}
+.contact-link:hover{color:var(--accent2);border-color:var(--accent2);}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--border);padding:32px 48px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+footer p{font-family:'Arial',sans-serif;font-size:11px;color:var(--dim);}
+footer a{color:var(--accent2);text-decoration:none;}
+
+/* ── SECTION DIVIDER ── */
+.sec-divider{border:none;border-top:1px solid var(--border);max-width:1100px;margin:0 auto;padding:0 48px;}
+
+/* ── LOADING SCREEN ── */
+.loader{
+  position:fixed;inset:0;background:var(--bg);z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .6s 1s,visibility .6s 1s;
+}
+.loader.done{opacity:0;visibility:hidden;}
+.loader-inner{text-align:center;}
+.loader-name{
+  font-family:'Arial',sans-serif;font-size:14px;letter-spacing:6px;
+  text-transform:uppercase;color:var(--muted);
+  animation:pulse 1s ease-in-out infinite;
+}
+.loader-bar{
+  width:200px;height:1px;background:var(--border);margin:16px auto 0;overflow:hidden;
+}
+.loader-fill{
+  height:100%;width:0;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  animation:load 1s .2s forwards;
+}
+@keyframes load{to{width:100%}}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+@media(max-width:768px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .hero{padding:0 24px;}
+  .scroll-hint{left:24px;}
+  .section{padding:70px 24px;}
+  .stats-bar,.brief-analytics,.agency-metrics{grid-template-columns:repeat(2,1fr);}
+  .re-grid{grid-template-columns:1fr;}
+  .editions-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-inner">
+    <div class="loader-name">Mihir Kore</div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+  </div>
+</div>
+
+<!-- CURSOR -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-brand">MK<span>.</span></a>
+  <div class="nav-links">
+    <a href="#brief">The Brief</a>
+    <a href="#agency">Agency Work</a>
+    <a href="#realestate">Real Estate</a>
+    <a href="#cbc">CBC Sports</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Digital Marketing · Sports Media · Toronto, ON</div>
+    <h1 class="hero-name">MIHIR<br/><span class="accent">KORE</span></h1>
+    <p class="hero-role">
+      <span>Paid Social · CRM Lifecycle · Content Strategy</span><br/>
+      Campaign execution across 10+ simultaneous client accounts
+    </p>
+    <div class="hero-tags">
+      <span class="hero-tag cert">Google Ads Certified</span>
+      <span class="hero-tag cert">HubSpot Email Marketing</span>
+      <span class="hero-tag cert">GA4 Certified</span>
+      <span class="hero-tag">Meta Ads Manager</span>
+      <span class="hero-tag">GoHighLevel CRM</span>
+      <span class="hero-tag">CBC Sports — Paris 2024</span>
+      <span class="hero-tag">PGWP — No Sponsorship Required</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#brief" class="btn btn-primary">View My Work</a>
+      <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+      <a href="https://linkedin.com/in/mihirkore" class="btn btn-ghost" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item reveal">
+    <span class="stat-num" data-target="471">0</span>
+    <span class="stat-label">Impressions · Last 7 Days</span>
+    <span class="stat-sub">↑ 186% week-over-week</span>
+  </div>
+  <div class="stat-item reveal reveal-delay-1">
+    <span class="stat-num" data-target="10" data-suffix="+">0</span>
+    <span class="stat-label">Client Accounts</span>
+    <span class="stat-sub">Managed simultaneously</span>
+  </div>
+  <div class="stat-item reveal reveal-delay-2">
+    <span class="stat-num" data-target="120" data-suffix="+">0</span>
+    <span class="stat-label">Active CRM Leads</span>
+    <span class="stat-sub">60%+ follow-up rate</span>
+  </div>
+  <div class="stat-item reveal reveal-delay-3">
+    <span class="stat-num" data-target="700" data-suffix="+">0</span>
+    <span class="stat-label">Week 1 Impressions</span>
+    <span class="stat-sub">The Brief · Zero paid budget</span>
+  </div>
+</div>
+
+<!-- ══════════════ THE BRIEF ══════════════ -->
+<section id="brief">
+<div class="section">
+  <p class="section-eyebrow reveal">Original Campaign Series</p>
+  <h2 class="section-title reveal">The Brief</h2>
+  <p class="section-body reveal">A self-initiated weekly sports marketing campaign series — built, written, and published independently. Every week: a different sports brand. Original strategic thinking. Zero budget.</p>
+
+  <div class="brief-analytics reveal">
+    <div class="analytics-cell">
+      <span class="analytics-num">471</span>
+      <span class="analytics-label">Impressions · 7 Days</span>
+      <span class="analytics-delta">↑ 186% vs prior week</span>
+    </div>
+    <div class="analytics-cell">
+      <span class="analytics-num">281</span>
+      <span class="analytics-label">Members Reached</span>
+      <span class="analytics-delta">Organic only · $0 spent</span>
+    </div>
+    <div class="analytics-cell">
+      <span class="analytics-num">292</span>
+      <span class="analytics-label">Best Post · 3 Days</span>
+      <span class="analytics-delta">PWHL data post</span>
+    </div>
+    <div class="analytics-cell">
+      <span class="analytics-num">700+</span>
+      <span class="analytics-label">Week 1 All-Time</span>
+      <span class="analytics-delta">Toronto FC · Launch</span>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div style="margin-top:60px;">
+    <p class="section-eyebrow reveal">Edition History</p>
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-week">Week 01 · Launch</div>
+        <div class="tl-title">Toronto FC — Duolingo x TFC "Learn the Game"</div>
+        <div class="tl-body">Activating Toronto's multicultural identity ahead of FIFA 2026 at BMO Field. Duolingo x TFC partnership concept — "Word of the Match" Reels, sleeve patch, June 12 activation, community program.</div>
+        <span class="tl-tag">700+ impressions · 2 reactions · 3 comments</span>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-week">Week 02</div>
+        <div class="tl-title">Toronto Raptors — FROZEN. Drake chose it. The Raptors just ended up there.</div>
+        <div class="tl-body">Drake's Iceman × Raptors brand gap analysis. The Cold City campaign: Spotify co-branded playlists, in-arena activation, OVO × Raptors merch. Introduced The Brief Insight mid-week sub-format.</div>
+        <span class="tl-tag">New sub-format launched</span>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-week">Week 03</div>
+        <div class="tl-title">Recap + The Brief Insight officially launched</div>
+        <div class="tl-body">Introduced the reactive mid-week format covering live sports marketing moments — Arsenal UCL final, PSG back-to-back UCL, Drake/Raptors debate, Canada FIFA 2026 hosting angle.</div>
+        <span class="tl-tag">Format expanded</span>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-week">Week 04</div>
+        <div class="tl-title">Toronto Sceptres — They Didn't Just Build a Fanbase. They Built an Ecosystem.</div>
+        <div class="tl-body">Data-driven analysis of the Sceptres' PWHL expansion — 9,100 fans/game, sold-out arenas, merchandise growth, commercial partner attraction. How women's sport scales when infrastructure meets demand.</div>
+        <span class="tl-tag">99 impressions</span>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-week">Recent · Best Post</div>
+        <div class="tl-title">PWHL — "Most people didn't see it coming. The numbers did."</div>
+        <div class="tl-body">Data-anchored strategic breakdown of the PWHL's commercial traction. Proved that data-first angles outperform opinion-led content — 292 impressions in 3 days organically.</div>
+        <span class="tl-tag" style="background:rgba(255,215,0,0.1);color:#FFD700;">292 impressions · Best post to date</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edition cards -->
+  <p class="section-eyebrow reveal" style="margin-top:60px;">The Brief Insight — Sub-Series</p>
+  <div class="editions-grid">
+    <div class="edition-card reveal">
+      <div class="edition-card-top">
+        <div>
+          <div class="edition-week">The Debate</div>
+          <div class="edition-title">Drake & The Raptors — Papering Over the Rebuild?</div>
+          <div class="edition-hook">"Is the Drake partnership helping the Raptors — or covering up five years of exits?"</div>
+        </div>
+        <span class="edition-imp">3 impr.</span>
+      </div>
+      <div class="edition-card-body">
+        <p class="edition-topic">Structured debate format. Two sides, one brand question. Audience decides.</p>
+      </div>
+    </div>
+    <div class="edition-card reveal reveal-delay-1">
+      <div class="edition-card-top">
+        <div>
+          <div class="edition-week">Bigger Than the Pitch</div>
+          <div class="edition-title">Canada Doesn't Need to Win the World Cup to Win the World Cup</div>
+          <div class="edition-hook">"Hosting FIFA 2026 is a brand opportunity. The result on the pitch is separate from the result in the market."</div>
+        </div>
+        <span class="edition-imp">2 impr.</span>
+      </div>
+      <div class="edition-card-body">
+        <p class="edition-topic">Macro brand opportunity analysis — Canada's commercial upside as FIFA 2026 host regardless of on-field results.</p>
+      </div>
+    </div>
+    <div class="edition-card reveal reveal-delay-2">
+      <div class="edition-card-top">
+        <div>
+          <div class="edition-week">UCL Special</div>
+          <div class="edition-title">Arsenal Lost on Penalties. Their Commercial Team Didn't.</div>
+          <div class="edition-hook">"UEFA prize money doesn't care about the scoreline."</div>
+        </div>
+        <span class="edition-imp">1 impr.</span>
+      </div>
+      <div class="edition-card-body">
+        <p class="edition-topic">Financial and brand analysis of Arsenal's Champions League run — how a finals appearance is a commercial asset regardless of result.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="sec-divider"/>
+
+<!-- ══════════════ AGENCY WORK ══════════════ -->
+<section id="agency">
+<div class="section">
+  <p class="section-eyebrow reveal">Agency Campaign Work</p>
+  <h2 class="section-title reveal">Digital Marketing<br/>Client Campaigns</h2>
+  <p class="section-body reveal">End-to-end campaign management across paid social, CRM lifecycle, email, and analytics — 10+ simultaneous client accounts, fast-paced agency environment.</p>
+
+  <div class="agency-metrics reveal">
+    <div class="metric-box"><div class="metric-box-num">10+</div><div class="metric-box-label">Simultaneous accounts</div></div>
+    <div class="metric-box"><div class="metric-box-num">120+</div><div class="metric-box-label">Active CRM leads</div></div>
+    <div class="metric-box"><div class="metric-box-num">60%+</div><div class="metric-box-label">Follow-up rate</div></div>
+    <div class="metric-box"><div class="metric-box-num">20+</div><div class="metric-box-label">Qualified leads/month</div></div>
+  </div>
+
+  <div class="role-cards">
+    <div class="role-card reveal">
+      <div class="role-card-header">
+        <div>
+          <div class="role-title-main">Digital Campaign & Account Coordinator</div>
+          <div class="role-org-main">Top Digital Marketing Experts</div>
+          <div class="role-sub-main">Multi-client agency · Healthcare & wellness · 10+ simultaneous accounts</div>
+        </div>
+        <div class="role-dates-main">Oct 2025 – Feb 2026</div>
+      </div>
+      <div class="role-card-body">
+        <ul class="role-bullets">
+          <li><strong>Paid Social:</strong> Built and managed Meta Ads campaigns across 10+ accounts — audience segmentation, bid strategy, budget pacing, A/B testing, daily performance monitoring and optimization</li>
+          <li><strong>CRM Lifecycle:</strong> Built GoHighLevel pipelines and automated follow-up sequences — email, SMS, and outreach workflows from acquisition through conversion for 120+ active leads</li>
+          <li><strong>Performance Reporting:</strong> Produced bi-weekly campaign reports across all accounts — reach, engagement, conversions, pipeline velocity, and actionable optimization recommendations</li>
+          <li><strong>Email Campaigns:</strong> Wrote and executed structured outbound email campaigns — audience-adapted copy, follow-up sequences, inbound inquiry handling, lead qualification</li>
+          <li><strong>Client Servicing:</strong> Day-to-day account contact for 10+ brands — weekly status meetings, campaign briefing, cross-functional coordination with content, design, and paid media</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="role-card reveal">
+      <div class="role-card-header">
+        <div>
+          <div class="role-title-main">Social Media & Content Coordinator</div>
+          <div class="role-org-main">NeuroBrain Treatment Centre</div>
+          <div class="role-sub-main">Healthcare clinic · Full social media ownership · Video production</div>
+        </div>
+        <div class="role-dates-main">Oct 2025 – Feb 2026</div>
+      </div>
+      <div class="role-card-body">
+        <ul class="role-bullets">
+          <li><strong>Full ownership:</strong> Content calendar, caption writing, Reel production in Adobe Premiere Pro, scheduling and publishing — independently, without supervision</li>
+          <li><strong>Video production:</strong> Produced two Meta Reels end-to-end — concept, script, filming, editing, publishing</li>
+          <li><strong>Analytics:</strong> Weekly performance reports tracking reach, impressions, engagement rate, and follower growth vs. approved targets</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="role-card reveal">
+      <div class="role-card-header">
+        <div>
+          <div class="role-title-main">Marketing & Outreach Coordinator</div>
+          <div class="role-org-main">myEmpower Therapy</div>
+          <div class="role-sub-main">Digital wellness platform · Email, SMS & CRM lifecycle</div>
+        </div>
+        <div class="role-dates-main">Oct 2025 – Feb 2026</div>
+      </div>
+      <div class="role-card-body">
+        <ul class="role-bullets">
+          <li>Designed and executed structured outbound email and SMS sequences — segmenting by intent stage, managing follow-up through GoHighLevel CRM</li>
+          <li>Managed inbound lead flow from Meta Ads — qualifying prospects, logging all interactions, escalating high-intent leads to appointment booking</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="sec-divider"/>
+
+<!-- ══════════════ REAL ESTATE ══════════════ -->
+<section id="realestate">
+<div class="section">
+  <p class="section-eyebrow reveal">New Offering</p>
+  <h2 class="section-title reveal">Real Estate<br/>Branding & Marketing</h2>
+  <p class="section-body reveal">End-to-end marketing for Toronto real estate agents — brand identity, social content, paid ads, and GoHighLevel CRM lead follow-up systems.</p>
+
+  <div class="re-grid">
+    <div class="re-card reveal">
+      <div class="re-icon">🎨</div>
+      <div class="re-title">Brand Identity & Graphics</div>
+      <div class="re-body">Personal brand kit, Just Listed/Just Sold templates, neighbourhood data graphics, monthly market reports — built to look premium across every touchpoint.</div>
+    </div>
+    <div class="re-card reveal reveal-delay-1">
+      <div class="re-icon">🎬</div>
+      <div class="re-title">Video Content</div>
+      <div class="re-body">Property walkthrough Reels, "What $X gets you in [neighbourhood]" comparisons, weekly market update videos — edited and published for Instagram, TikTok, and YouTube Shorts.</div>
+    </div>
+    <div class="re-card reveal reveal-delay-2">
+      <div class="re-icon">📱</div>
+      <div class="re-title">Social Media Management</div>
+      <div class="re-body">Full content calendar, captions, and publishing across Instagram, Facebook, and LinkedIn — 12–16 posts per month with monthly analytics reporting.</div>
+    </div>
+    <div class="re-card reveal">
+      <div class="re-icon">🎯</div>
+      <div class="re-title">Paid Ads — Meta & Google</div>
+      <div class="re-body">Open house lead gen, listing promotion, and retargeting — targeted by postal code and buyer intent, with weekly performance reports and full budget transparency.</div>
+    </div>
+    <div class="re-card reveal reveal-delay-1">
+      <div class="re-icon">🔁</div>
+      <div class="re-title">GoHighLevel CRM System</div>
+      <div class="re-body">CRM pipeline build, automated follow-up sequences, and lead nurture workflows — so every open house inquiry, DM, and ad lead gets followed up automatically.</div>
+    </div>
+    <div class="re-card reveal reveal-delay-2">
+      <div class="re-icon">📊</div>
+      <div class="re-title">Market Reports & Email</div>
+      <div class="re-body">Monthly neighbourhood market reports, branded email newsletters to your database, and LinkedIn content that positions you as the local authority.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="sec-divider"/>
+
+<!-- ══════════════ CBC SPORTS ══════════════ -->
+<section id="cbc">
+<div class="section">
+  <p class="section-eyebrow reveal">Broadcast Production</p>
+  <h2 class="section-title reveal">CBC Sports<br/>Paris 2024 Olympics</h2>
+  <p class="section-body reveal">Production Assistant & Researcher — Paris 2024 Summer Olympics. Full Games coverage, July 26 – August 11, 2024. Canada's national broadcaster at the highest level of live sports media production.</p>
+  <div class="role-card reveal" style="margin-top:40px;">
+    <div class="role-card-header">
+      <div>
+        <div class="role-title-main">Production Assistant & Researcher</div>
+        <div class="role-org-main">CBC Sports / Canadian Broadcasting Corporation</div>
+        <div class="role-sub-main">Paris 2024 Summer Olympics · 17 Days of Live Broadcast Production</div>
+      </div>
+      <div class="role-dates-main">Jul – Aug 2024</div>
+    </div>
+    <div class="role-card-body">
+      <ul class="role-bullets">
+        <li><strong>Research & Story Development:</strong> Athlete profiles, competitive analysis, historical context, and story angles — delivered under live broadcast deadlines with no second chances</li>
+        <li><strong>Show Preparation:</strong> Background briefing materials for hosts and producers — deciding what context matters, what angle serves the audience</li>
+        <li><strong>Editorial Judgment:</strong> Shaped how CBC framed stories and covered Canadian athletes throughout the Games</li>
+        <li><strong>Deadline Discipline:</strong> 17 days of live broadcast — speed and accuracy both non-negotiable, simultaneously</li>
+      </ul>
+    </div>
+  </div>
+  <div class="role-card reveal" style="margin-top:20px;">
+    <div class="role-card-header">
+      <div>
+        <div class="role-title-main">Social Media Coordinator & Editorial Writer</div>
+        <div class="role-org-main">Slam Wrestling — slamwrestling.net</div>
+        <div class="role-sub-main">Canada's leading wrestling publication · 9 published articles</div>
+      </div>
+      <div class="role-dates-main">Jan – Apr 2025</div>
+    </div>
+    <div class="role-card-body">
+      <ul class="role-bullets">
+        <li>Built weekly content calendars and managed publishing across X and Instagram — monitoring engagement and optimizing cadence based on analytics</li>
+        <li>9 published articles: interviews, reviews, breaking news, and features — fast-turnaround sports journalism under deadline</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="sec-divider"/>
+
+<!-- ══════════════ SKILLS ══════════════ -->
+<section id="skills">
+<div class="section">
+  <p class="section-eyebrow reveal">Capabilities</p>
+  <h2 class="section-title reveal">Skills & Certifications</h2>
+
+  <div class="cert-strip reveal">
+    <div class="cert-badge"><span class="cert-check">✓</span><div><div class="cert-name">Google Ads Certified</div><div class="cert-issuer">Google Skillshop · Search & Display · 2026</div></div></div>
+    <div class="cert-badge"><span class="cert-check">✓</span><div><div class="cert-name">Google Analytics 4</div><div class="cert-issuer">Google · GA4 Certified</div></div></div>
+    <div class="cert-badge"><span class="cert-check">✓</span><div><div class="cert-name">HubSpot Email Marketing</div><div class="cert-issuer">HubSpot Academy · 2026</div></div></div>
+    <div class="cert-badge"><span class="cert-check">✓</span><div><div class="cert-name">CannSell Ontario</div><div class="cert-issuer">Valid</div></div></div>
+    <div class="cert-badge" style="opacity:.5;"><span class="cert-check" style="color:var(--dim);">◷</span><div><div class="cert-name">Meta Blueprint</div><div class="cert-issuer">In Progress</div></div></div>
+    <div class="cert-badge" style="opacity:.5;"><span class="cert-check" style="color:var(--dim);">◷</span><div><div class="cert-name">Salesforce Marketing Cloud</div><div class="cert-issuer">In Progress</div></div></div>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-card-label">Paid Social</div>
+      <ul class="skill-list">
+        <li>Meta Ads Manager — campaign build, audience segmentation, optimization</li>
+        <li>Google Ads — Search & Display (certified)</li>
+        <li>A/B testing — copy, creative, audience, bid strategy</li>
+        <li>Budget pacing and daily performance monitoring</li>
+      </ul>
+    </div>
+    <div class="skill-card reveal reveal-delay-1">
+      <div class="skill-card-label">CRM & Lifecycle</div>
+      <ul class="skill-list">
+        <li>GoHighLevel — pipeline build, automation, sequences</li>
+        <li>HubSpot — email marketing certified</li>
+        <li>Salesforce Marketing Cloud (in progress)</li>
+        <li>Lead nurture, follow-up workflows, CRM reporting</li>
+      </ul>
+    </div>
+    <div class="skill-card reveal reveal-delay-2">
+      <div class="skill-card-label">Analytics</div>
+      <ul class="skill-list">
+        <li>Google Analytics 4 (certified)</li>
+        <li>Meta Ads Manager insights</li>
+        <li>Excel — pivot tables, dashboards, BCRs</li>
+        <li>Bi-weekly structured client performance reports</li>
+      </ul>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-label">Content & Video</div>
+      <ul class="skill-list">
+        <li>Adobe Premiere Pro — Reels, TikTok, Stories</li>
+        <li>Canva — branded graphics, social assets</li>
+        <li>Content calendar management — 10+ brands</li>
+        <li>Sports journalism — 9 published articles</li>
+      </ul>
+    </div>
+    <div class="skill-card reveal reveal-delay-1">
+      <div class="skill-card-label">Social Platforms</div>
+      <ul class="skill-list">
+        <li>Instagram, TikTok, Facebook, LinkedIn, X</li>
+        <li>GoHighLevel Social Planner</li>
+        <li>LinkedIn Creator — 471 organic impressions/week</li>
+        <li>Platform analytics and cadence optimization</li>
+      </ul>
+    </div>
+    <div class="skill-card reveal reveal-delay-2">
+      <div class="skill-card-label">Tools</div>
+      <ul class="skill-list">
+        <li>GoHighLevel, HubSpot, Meta Ads Manager</li>
+        <li>Google Ads, GA4, Google Workspace</li>
+        <li>Microsoft Excel, Canva, Adobe Premiere Pro</li>
+        <li>Claude, ChatGPT, Perplexity, Midjourney</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<div class="section" id="contact" style="padding-top:0;">
+  <div class="contact-block reveal">
+    <h2>Let's work together.</h2>
+    <p>Open to full-time roles in digital marketing, CRM lifecycle, paid social, and sports marketing across Toronto. Also available for freelance real estate branding projects.</p>
+    <div class="contact-links">
+      <a href="mailto:m.kore21003@gmail.com" class="contact-link">m.kore21003@gmail.com</a>
+      <a href="tel:4168398252" class="contact-link">416-839-8252</a>
+      <a href="https://linkedin.com/in/mihirkore" class="contact-link" target="_blank">LinkedIn</a>
+      <a href="https://mkore21.github.io/tfc-portfolio" class="contact-link" target="_blank">TFC Portfolio</a>
+    </div>
+    <p style="font-family:'Arial',sans-serif;font-size:11px;color:var(--dim);margin-top:24px;">PGWP — Authorized to work full-time in Canada · No sponsorship required · Toronto, ON</p>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Mihir Kore · Digital Marketing & Sports Media · Toronto, ON</p>
+  <p>Google Ads Certified · GA4 · HubSpot · <a href="https://mkore21.github.io/Mihir-Kore--Digital-Portfolio/" target="_blank">Live Portfolio →</a></p>
+</footer>
+
+<script>
+// Loader
+window.addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('loader').classList.add('done'),1000);
+});
+
+// Nav scroll
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',window.scrollY>60);
+});
+
+// Cursor glow
+const glow=document.getElementById('cursorGlow');
+window.addEventListener('mousemove',e=>{
+  glow.style.left=e.clientX+'px';
+  glow.style.top=e.clientY+'px';
+});
+
+// Intersection observer — reveal
+const reveals=document.querySelectorAll('.reveal');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      // Counter animation
+      const num=e.target.querySelector('[data-target]');
+      if(num && !num.dataset.counted){
+        num.dataset.counted='1';
+        animateCount(num);
+      }
+    }
+  });
+},{threshold:0.15});
+reveals.forEach(r=>observer.observe(r));
+
+// Also observe stat items for bottom line
+const statItems=document.querySelectorAll('.stat-item');
+const statObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      const num=e.target.querySelector('[data-target]');
+      if(num && !num.dataset.counted){
+        num.dataset.counted='1';
+        animateCount(num);
+      }
+    }
+  });
+},{threshold:0.3});
+statItems.forEach(s=>statObs.observe(s));
+
+function animateCount(el){
+  const target=+el.dataset.target;
+  const suffix=el.dataset.suffix||'';
+  const duration=1600;
+  const start=performance.now();
+  const ease=t=>t<.5?2*t*t:(4-2*t)*t-1;
+  function step(now){
+    const p=Math.min((now-start)/duration,1);
+    el.textContent=Math.floor(ease(p)*target)+suffix;
+    if(p<1)requestAnimationFrame(step);
+    else el.textContent=target+suffix;
+  }
+  requestAnimationFrame(step);
+}
+
+// Smooth active nav highlight
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let current='';
+  sections.forEach(s=>{
+    if(window.scrollY>=s.offsetTop-200)current=s.id;
+  });
+  navLinks.forEach(a=>{
+    a.style.color=a.getAttribute('href')==='#'+current?'var(--white)':'';
+  });
+},{passive:true});
+</script>
+</body>
+</html>
